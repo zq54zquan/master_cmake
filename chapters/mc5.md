@@ -26,4 +26,73 @@ project (projectname [CXX] [C] [Java] [NONE])
 
 ## 4.3 流控制
 
+在很多方面写一个CMakeList文件就和写一段程序是一毛一样的，所以和其他的编程语言一样，CMake为咱提供了控制流结构：
 
+* 条件判断语句(例如:`if`等)
+* 循环结构(例如:`foreach`和`while`等)
+* 程序流程定义(例如`macro`和`function`等)
+
+首先我们看下`if`命令，在很多方面和在其他编程语言是一样的，计算表达式的值，根据结果运行命令的体内的代码或者运行可选的`else`中的代码。举个栗子：
+
+```cmake
+if (FOO)
+# do something here
+else (FOO)
+# do something else
+endif(FOO)
+```
+一个你可能注意到的不一样的地方就是`if`中的条件在`else`和`endif`中都会重复写一次，这个是可选的，在这本书里边你将看到两种风格的代码，你可以自己选择：
+
+```cmake
+if (FOO)
+# do something here 
+else()
+# do something else
+endif()
+```
+
+`if`命令有一些使用的限制，它不支持一些像`${FOO} && ${BAR} || ${FUBAR}`这样的C类型的表达式，作为替代，它支持一些表达式的子集，大多数情况下，这些就够啦，`if`命令支持:
+
+* **`if(variable)`**
+
+	如果变量的值不是空，0，FALSE, OFF或者NOTFOUND
+* **`if(NOT variable)`** 
+
+	如果变量的值是空，0， FALSE, OFF或者NOTFOUND
+* **`if(variabl1 AND variable2)`**	
+	
+	变量同时为真，表达式为真
+* **`if(varibale1 OR variable2)`** 
+
+	变量一个为真，表达式为真
+* **`if(COMMAND command-name)`**
+
+	如果给定的命令名称是一个可调用的命令，表达式为真
+* **`if(DEFINED variable)`**
+	
+	如果变量被set过，不管这个值是多少，表达式为真
+
+* **`if(EXISTS file-name)`**
+* **`if(EXISTS directory-name)`**
+	
+	如果文件或者目录存在，表达式为真
+
+* **`if(IS_DIRECTORY directory-name)`**
+* **`if(IS_ABSOLUTE name)`**
+	
+	如果名称是一个目录或者一个绝对路径，表达式为真
+* **`if(name1 IS\_NEWER_THAN name2)`**
+
+	最后修改时间文件1比文件2更新，表达式为真
+
+* **`if(variable MATCH regex)`**
+* **`if(string MATCH regex)`**
+	
+	如果给定的字符串或者变量的值符合正则，表达式为真
+
+`EQUAL`,`LESS`,和`GREATER`可以用作数值比较
+	
+
+
+	
+	
